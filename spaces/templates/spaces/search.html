@@ -17,7 +17,7 @@
         {% if lga %}
         <li><a href="#">
           Workspaces in <span class="lga">{{ lga }}</span> (
-          <span class="number-found-city">{{ lgacount }}</span> )</a>
+          <span class="number-found-city">{{ lgacount.count }}</span> )</a>
         </li>
         {% endif %}
       </ul>
@@ -110,7 +110,7 @@
           </div>
           <div class="second">
             <p>
-              <span class="spaces-found">{{ lgacount }}</span> Space{{ lgacount|pluralize }} found.
+              <span class="spaces-found">{{ lgacount.count }}</span> Space{{ lgacount.count|pluralize }} found.
             </p>
           </div>
           <div class="spaces-wrap">

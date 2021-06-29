@@ -57,7 +57,7 @@ def search(request):
             return redirect('spaces:dashboard')
     except:
         return redirect('spaces:dashboard')
-    return render(request, 'spaces/search.html', {'results': results, 'state': state, 'lga': lga, 'statecount': stateCount, 'lgacount': object_list.count()})
+    return render(request, 'spaces/search.html', {'results': results, 'state': state, 'lga': lga, 'statecount': stateCount, 'lgacount': object_list})
 
 
 @login_required
