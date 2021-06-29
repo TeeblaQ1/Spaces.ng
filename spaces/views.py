@@ -38,9 +38,11 @@ def search(request):
             object_list = []
             stateCount = Spaces.published.filter(state__search=state).count()
             if 'lga' in request.GET:
-                if request.GET['lga']:
+                if request.GET['lga'] != '':
                     lga = request.GET['lga']
                     object_list = Spaces.published.filter(state__search=state, lga__search=lga)
+                else:
+                    object_list = Spaces.published.filter(state__search=state)
             else:
                 object_list = Spaces.published.filter(state__search=state).order_by('created')
             if (not state) and (not lga):
