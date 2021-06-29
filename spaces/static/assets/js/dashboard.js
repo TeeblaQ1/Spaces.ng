@@ -33,7 +33,7 @@ function loadState() {
     dropdown.add(defaultOption)
     dropdown.selectedIndex = 0
 
-    fetch('/static/NgStateAndLgaApi.txt')
+    fetch('https://spacesngapp.herokuapp.com/static/ngstateandlgaapi.txt')
     .then(response => response.json())
     .then(data => {
         let option;
@@ -66,7 +66,7 @@ function loadLga(stateName) {
     dropdown.add(defaultOption)
     dropdown.selectedIndex = 0
 
-    fetch('/static/NgStateAndLgaApi.txt')
+    fetch('https://spacesngapp.herokuapp.com/static/ngstateandlgaapi.txt')
     .then(response => response.json())
     .then(data => {
         let option;
