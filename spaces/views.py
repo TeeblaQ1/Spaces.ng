@@ -31,28 +31,31 @@ def space_detail(request, space):
     return render(request, 'spaces/detail.html', {'space': space})
 
 def search(request):
-    if 'state' in request.GET:
-        state = request.GET['state']
-        lga = None
-        object_list = []
-        stateCount = Spaces.published.filter(state__search=state).count()
-        if 'lga' in request.GET:
-            if request.GET['lga']:
-                lga = request.GET['lga']
-                object_list = Spaces.published.filter(state__search=state, lga__search=lga)
+    try:
+        if 'state' in request.GET:
+            state = request.GET['state']
+            lga = None
+            object_list = []
+            stateCount = Spaces.published.filter(state__search=state).count()
+            if 'lga' in request.GET:
+                if request.GET['lga']:
+                    lga = request.GET['lga']
+                    object_list = Spaces.published.filter(state__search=state, lga__search=lga)
+            else:
+                object_list = Spaces.published.filter(state__search=state).order_by('created')
+            if (not state) and (not lga):
+                return redirect('spaces:dashboard')
+            paginator = Paginator(object_list, 10)
+            page = request.GET.get('page')
+            try:
+                results = paginator.page(page)
+            except PageNotAnInteger:
+                results = paginator.page(1)
+            except EmptyPage:
+                results = paginator.page(paginator.num_pages)
         else:
-            object_list = Spaces.published.filter(state__search=state).order_by('created')
-        if (not state) and (not lga):
             return redirect('spaces:dashboard')
-        paginator = Paginator(object_list, 10)
-        page = request.GET.get('page')
-        try:
-            results = paginator.page(page)
-        except PageNotAnInteger:
-            results = paginator.page(1)
-        except EmptyPage:
-            results = paginator.page(paginator.num_pages)
-    else:
+    except:
         return redirect('spaces:dashboard')
     return render(request, 'spaces/search.html', {'results': results, 'state': state, 'lga': lga, 'statecount': stateCount, 'lgacount': object_list.count()})
 
