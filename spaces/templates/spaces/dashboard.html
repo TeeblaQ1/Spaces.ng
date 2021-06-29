@@ -138,9 +138,10 @@
             <!-- <img src="assets/img/no-result" alt=""> -->
                 <p>Sorry, there are no spaces loaded yet.</p>
             </div>
+            {% endfor %}
             </div>
-             {% endfor %}
              {% if spaces %}
+
                 {% include "pagination.html" with page=spaces %}
           {% endif %}
         </section>
