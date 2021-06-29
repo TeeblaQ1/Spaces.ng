@@ -115,7 +115,7 @@ ul.dropdown li {
 ul.dropdown li:last-child {
   border-top: 1px solid rgb(169, 181, 182);
 }
-.user:hover ul.dropdown {
+.user:hover ul.dropdown, .user:active ul.dropdown {
   display: block;
   position: absolute;
   top: 0;
@@ -123,7 +123,7 @@ ul.dropdown li:last-child {
   margin-top: 40px;
   z-index: 150;
 }
-.user:hover ul.dropdown li:hover {
+.user:hover ul.dropdown li:hover, .user:active ul.dropdown li:active {
   background-color: #4623d2;
   color: white;
 }
@@ -140,7 +140,7 @@ nav ul li {
   padding: 10px 0;
   text-transform: uppercase;
 }
-nav ul *:hover {
+nav ul *:hover, nav ul *:active {
   background-color: white;
   color: #4623d2;
   border-radius: 4px;
@@ -275,7 +275,7 @@ nav ul button {
   padding: 30px 0;
   font-weight: 600;
 }
-#mobile-nav-links li a:hover {
+#mobile-nav-links li a:hover, #mobile-nav-links li a:active {
   background-color: white;
   font-weight: bold;
   color: #4623d2;
@@ -422,7 +422,7 @@ nav ul button {
   font-weight: bold;
   text-transform: uppercase;
 }
-.login__btn:hover {
+.login__btn:hover, .login__btn:active {
   background: #270f8a;
   /* color: var(--interface-color); */
   transition: background-color 1s;
@@ -496,7 +496,9 @@ footer ul li {
   color: #8396bb;
 }
 footer ul li:hover,
-.contact p a:hover {
+.contact p a:hover,
+footer ul li:active,
+.contact p a:active {
   color: white;
 }
 footer ul.social {
@@ -510,7 +512,7 @@ footer ul.social li i {
   color: white;
   font-weight: normal;
 }
-footer ul.social li i:hover {
+footer ul.social li i:hover, footer ul.social li i:active {
   padding: 0;
   color: #8396bb;
 }
@@ -528,7 +530,7 @@ footer ul.social li i:hover {
   margin: 0;
   color: #8396bb;
 }
-.pjt-92 p:hover {
+.pjt-92 p:hover, .pjt-92 p:active {
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -587,7 +589,7 @@ input#reset-btn {
   font-weight: bold;
   cursor: pointer;
 }
-input#reset-btn:hover {
+input#reset-btn:hover, input#reset-btn:active {
   color: #4623d2;
   background-color: #ddd;
 }
@@ -650,7 +652,7 @@ input#reset-btn:hover {
   justify-content: center;
   cursor: pointer;
 }
-.modal-close:hover {
+.modal-close:hover, .modal-close:active {
   color: #aaa;
 }
 .modal__btn {
@@ -667,7 +669,7 @@ input#reset-btn:hover {
   font-weight: bold;
   text-transform: uppercase;
 }
-.modal__btn:hover {
+.modal__btn:hover, .modal__btn:active {
   background: #270f8a;
   /* color: var(--interface-color); */
   transition: background-color 1s;
@@ -726,7 +728,7 @@ input#reset-btn:hover {
   .user i {
     font-size: 30px;
   }
-  .user:hover ul.dropdown {
+  .user:hover ul.dropdown, .user:active ul.dropdown {
     margin-top: 30px;
   }
   /* footer */

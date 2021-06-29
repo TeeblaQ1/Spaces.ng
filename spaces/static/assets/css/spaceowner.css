@@ -101,7 +101,7 @@ ul.dropdown li {
 ul.dropdown li:last-child {
   border-top: 1px solid rgb(169, 181, 182);
 }
-.user:hover ul.dropdown {
+.user:hover ul.dropdown, .user:active ul.dropdown {
   display: block;
   position: absolute;
   top: 0;
@@ -109,7 +109,7 @@ ul.dropdown li:last-child {
   margin-top: 40px;
   z-index: 150;
 }
-.user:hover ul.dropdown li:hover {
+.user:hover ul.dropdown li:hover, .user:active ul.dropdown li:active {
   background-color: #4623d2;
   color: white;
 }
@@ -126,7 +126,7 @@ nav ul li {
   padding: 10px 0;
   text-transform: uppercase;
 }
-nav ul *:hover {
+nav ul *:hover, nav ul *:active {
   background-color: white;
   color: #4623d2;
   border-radius: 4px;
@@ -261,7 +261,7 @@ nav ul button {
   padding: 30px 0;
   font-weight: 600;
 }
-#mobile-nav-links li a:hover {
+#mobile-nav-links li a:hover, #mobile-nav-links li a:active {
   background-color: white;
   font-weight: bold;
   color: #4623d2;
@@ -562,7 +562,7 @@ footer ul.social li i:hover {
   .user i {
     font-size: 30px;
   }
-  .user:hover ul.dropdown {
+  .user:hover ul.dropdown, .user:active ul.dropdown {
     margin-top: 30px;
   }
   /* footer */
