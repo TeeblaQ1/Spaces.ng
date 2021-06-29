@@ -131,13 +131,13 @@
                 </div>
               </div>
             </a>
-            </div>
             {% empty %}
             <div class="no-results">
             <!-- <img src="assets/img/no-result" alt=""> -->
                 <p>Sorry, there are no spaces in your current location. <br>Make another search.</p>
             </div>
-             {% endfor %}
+            {% endfor %}
+            </div>
              {% if results %}
              {% include "pagination.html" with page=results %}
           {% endif %}
