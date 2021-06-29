@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG')
 
 
-ALLOWED_HOSTS = ['*.herokuapp.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['spacesngapp.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
