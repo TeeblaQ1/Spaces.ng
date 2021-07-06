@@ -7,6 +7,8 @@ app_name = 'spaces'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('about/', views.aboutus, name='aboutus'),
+    path('contact/', views.contactus, name='contactus'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('findSpace/', views.search, name='search'),
     path('register/', views.register_space, name='register_space'),

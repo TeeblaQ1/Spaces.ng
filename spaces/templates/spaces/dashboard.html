@@ -18,7 +18,7 @@
           <span class="number-found-city">10</span> )</a>
         </li> -->
         <li><a href="#">
-            Explore Workspaces</a>
+            Explore Workspaces {% if spaces %}({{ spacecount.count }}){% endif %}</a>
           </li>
       </ul>
     </div>
@@ -49,7 +49,7 @@
           <span class="state">Lagos</span> State
         </h1> -->
         <h1>
-            Explore Workspaces
+            Explore Workspaces {% if spaces %}({{ spacecount.count }}){% endif %}
           </h1>
       </div>
       <div class="main-body">
@@ -138,10 +138,9 @@
             <!-- <img src="assets/img/no-result" alt=""> -->
                 <p>Sorry, there are no spaces loaded yet.</p>
             </div>
-            {% endfor %}
+             {% endfor %}
             </div>
              {% if spaces %}
-
                 {% include "pagination.html" with page=spaces %}
           {% endif %}
         </section>
@@ -150,6 +149,6 @@
   </div>
 {% endblock %}
 {% block domready %}
-<!-- <script src="{% static 'assets/js/signin.js' %}"></script> -->
 <script src="{% static 'assets/js/dashboard.js' %}"></script>
+<script src="{% static 'assets/js/signin.js' %}"></script>
 {% endblock %}

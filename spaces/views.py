@@ -1,9 +1,13 @@
 from django.core import paginator
+from django.db.models import Count
 from django.shortcuts import get_object_or_404, redirect, render
 from allauth.account.views import PasswordChangeView
 from .models import Spaces
+from .forms import ContactUsForm, RegisterSpaceForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
+from django.utils.text import slugify
 # Create your views here.
 
 class CustomPasswordChangeView(PasswordChangeView):
@@ -11,7 +15,8 @@ class CustomPasswordChangeView(PasswordChangeView):
 
 
 def index(request):
-    return render(request, 'spaces/index.html')
+    featured_spaces = Spaces.published.order_by('-created')[:5]
+    return render(request, 'spaces/index.html', {'featured_spaces': featured_spaces})
 
 def dashboard(request):
     object_list = Spaces.published.all()
@@ -23,12 +28,15 @@ def dashboard(request):
         spaces = paginator.page(1)
     except EmptyPage:
         spaces = paginator.page(paginator.num_pages)
-    return render(request, 'spaces/dashboard.html', {'spaces': spaces, 'page': page})
+    return render(request, 'spaces/dashboard.html', {'spaces': spaces, 'page': page, 'spacecount': object_list})
 
 @login_required
 def space_detail(request, space):
     space = get_object_or_404(Spaces, slug=space, status='published')
-    return render(request, 'spaces/detail.html', {'space': space})
+    space_tags_ids = space.facilities.values_list('id', flat=True)
+    similar_spaces = Spaces.published.filter(facilities__in=space_tags_ids).exclude(id=space.id)
+    similar_spaces = similar_spaces.annotate(same_tags=Count('facilities')).order_by('-same_tags', '-created')[:3]
+    return render(request, 'spaces/detail.html', {'space': space, 'similar_spaces': similar_spaces})
 
 def search(request):
     try:
@@ -64,9 +72,41 @@ def search(request):
 
 @login_required
 def register_space(request):
-    return render(request, 'spaces/register_space.html')
+    if request.method == 'POST':
+        print(request.POST)
+        facilities = []
+        for key, value in request.POST.dict().items():
+            if value == 'on':
+                facilities.append(key)
+        print('List of facilities: ')
+        lst = ','.join(facilities)
+        print(lst)
+        f = RegisterSpaceForm(data=request.POST, files=request.FILES)
+        if f.is_valid():
+            new_space = f.save(commit=False)
+            new_space.slug = slugify(new_space.name)
+            new_space.save()
+            f.save_m2m()
+            return redirect('spaces:register_space_done')
+    else:
+        f = RegisterSpaceForm()
+    return render(request, 'spaces/register_space.html', {'form': f})
 
 
 @login_required
 def register_space_done(request):
     return render(request, 'spaces/register_space_done.html')
+
+def aboutus(request):
+    return render(request, 'spaces/aboutus.html')
+
+def contactus(request):
+    if request.method == 'POST':
+        f = ContactUsForm(request.POST)
+        if f.is_valid():
+            f.save()
+            messages.add_message(request, messages.INFO, 'Thank You! Your message has been submitted. We would get back to you shortly.')
+            return redirect('spaces:contactus')
+    else:
+        f = ContactUsForm()
+    return render(request, 'spaces/contactus.html', {'form': f})

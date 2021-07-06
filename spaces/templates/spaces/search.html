@@ -110,7 +110,7 @@
           </div>
           <div class="second">
             <p>
-              <span class="spaces-found">{{ lgacount.count }}</span> Space{{ lgacount.count|pluralize }} found.
+              <span class="spaces-found">{{ lgacount.count }}</span> Space{{ lgacount|pluralize }} found.
             </p>
           </div>
           <div class="spaces-wrap">
@@ -136,7 +136,7 @@
             <!-- <img src="assets/img/no-result" alt=""> -->
                 <p>Sorry, there are no spaces in your current location. <br>Make another search.</p>
             </div>
-            {% endfor %}
+             {% endfor %}
             </div>
              {% if results %}
              {% include "pagination.html" with page=results %}
@@ -147,6 +147,6 @@
   </div>
 {% endblock %}
 {% block domready %}
-<!-- <script src="{% static 'assets/js/signin.js' %}"></script> -->
 <script src="{% static 'assets/js/dashboard.js' %}"></script>
+<script src="{% static 'assets/js/signin.js' %}"></script>
 {% endblock %}
