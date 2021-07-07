@@ -26,11 +26,10 @@
               <button class="register-btn"><a href="{% url 'spaces:register_space' %}">Do you have a space?</a></button>
             </ul>
           </nav>
-          <div class="user" id = "user">   
+          <div class="user" id = "user">{% if request.user.is_authenticated %}<a><strong>{{ request.user.username | capfirst }}</strong>&nbsp;&nbsp;&nbsp;</a>{% endif %}   
             <i class="far fa-user-circle"></i>
             {% if request.user.is_authenticated %}
               <ul class="dropdown">
-                <li><a href="#">Hello, {{ request.user.username | capfirst }}</a></li>
                 <li><a href="{% url 'account_password_change' %}">Change Password</a></li>
                 <li id="id_logout"><a href="#">Log Out</a></li>
               </ul>
