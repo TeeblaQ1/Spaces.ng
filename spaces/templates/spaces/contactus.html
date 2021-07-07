@@ -11,12 +11,10 @@
   </ul>
   <div class="image__container">
     <h1>Contact Us</h1>
-    {% if messages %}
-    {% for message in messages %}
-    <p>{{ message }}</p>
-    {% endfor %}
+    {% if success %}
+    <p>{{ success }}</p>
     {% else %}
-    <p>We love to hear from you</p>
+    <p>We love to hear from you!</p>
     {% endif %}
 </div>
   <div class="container">

@@ -73,14 +73,6 @@ def search(request):
 @login_required
 def register_space(request):
     if request.method == 'POST':
-        print(request.POST)
-        facilities = []
-        for key, value in request.POST.dict().items():
-            if value == 'on':
-                facilities.append(key)
-        print('List of facilities: ')
-        lst = ','.join(facilities)
-        print(lst)
         f = RegisterSpaceForm(data=request.POST, files=request.FILES)
         if f.is_valid():
             new_space = f.save(commit=False)
@@ -105,8 +97,8 @@ def contactus(request):
         f = ContactUsForm(request.POST)
         if f.is_valid():
             f.save()
-            messages.add_message(request, messages.INFO, 'Thank You! Your message has been submitted. We would get back to you shortly.')
-            return redirect('spaces:contactus')
+            success = "Thank You! Your message has been submitted sucessfully. We'd get back to you shortly."
+            return render(request, 'spaces/contactus.html', {'form': f, 'success': success})
     else:
         f = ContactUsForm()
     return render(request, 'spaces/contactus.html', {'form': f})

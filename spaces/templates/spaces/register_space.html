@@ -14,7 +14,6 @@
       </ul>
     </div>
     <div class="main">
-      {{ form.errors }}
       <form target="_blank" action="{% url 'spaces:register_space' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="facilities" value="" id="id_facilities">
