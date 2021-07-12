@@ -55,4 +55,17 @@ function noSearch () {
         } 
     }
 }
-noSearch();
+try {
+    noSearch();
+} catch (error) {
+    
+}
+
+function paginate(value) {
+    let search = document.location.search
+    if ('URLSearchParams' in window) {
+        let searchParams = new URLSearchParams(search)
+        searchParams.set('page', value)
+        document.location.search = searchParams.toString()
+    }
+  }

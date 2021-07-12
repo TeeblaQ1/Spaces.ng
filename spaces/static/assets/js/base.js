@@ -29,7 +29,7 @@ function loadState() {
   dropdown.add(defaultOption)
   dropdown.selectedIndex = 0
 
-  fetch('/static/ngstateandlgaapi.txt')
+  fetch('http://127.0.0.1:7200/static/NgStateAndLgaApi.txt')
   .then(response => response.json())
   .then(data => {
       let option;
@@ -62,7 +62,7 @@ function loadLga(stateName) {
   dropdown.add(defaultOption)
   dropdown.selectedIndex = 0
 
-  fetch('/static/ngstateandlgaapi.txt')
+  fetch('http://127.0.0.1:7200/static/NgStateAndLgaApi.txt')
   .then(response => response.json())
   .then(data => {
       let option;

@@ -1,5 +1,6 @@
 from django.core import paginator
 from django.db.models import Count
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from allauth.account.views import PasswordChangeView
 from .models import Spaces
@@ -11,6 +12,7 @@ from django.utils.text import slugify
 # Create your views here.
 
 class CustomPasswordChangeView(PasswordChangeView):
+    # URL to redirect to once passoword has been reset successfully
     success_url = '/accounts/password/reset/key/done'
 
 
@@ -20,6 +22,23 @@ def index(request):
 
 def dashboard(request):
     object_list = Spaces.published.all()
+    facility_list = Spaces.facilities.most_common()[:5]  # Get the first five most common facilities
+    spacecount = Spaces.published.all() # Noted for the sake of counting how many spaces has been published altogether
+    
+    # For filter purpose
+    if ('capacity' in request.GET) and (request.GET['capacity'] != ''):
+        capacity = request.GET['capacity']
+        object_list = object_list.filter(capacity__search=capacity)
+    if ('facilities' in request.GET) and (request.GET['facilities'] != ''):
+        filter_list = request.GET['facilities'].split(',')
+        for facility in filter_list:
+            object_list = object_list.filter(facilities__name__search=facility)
+    if ('sort' in request.GET) and (request.GET['sort'] != ''):
+        sort_list = ['rating', '-rating', 'created', '-created']  # A list of allowed items to sort by
+        sort = request.GET['sort']
+        if sort in sort_list:
+            object_list = object_list.order_by(sort)
+
     paginator = Paginator(object_list, 10)
     page = request.GET.get('page')
     try:
@@ -28,7 +47,7 @@ def dashboard(request):
         spaces = paginator.page(1)
     except EmptyPage:
         spaces = paginator.page(paginator.num_pages)
-    return render(request, 'spaces/dashboard.html', {'spaces': spaces, 'page': page, 'spacecount': object_list})
+    return render(request, 'spaces/dashboard.html', {'spaces': spaces, 'page': page, 'spacecount': spacecount, 'facility_list': facility_list})
 
 @login_required
 def space_detail(request, space):
@@ -45,16 +64,26 @@ def search(request):
             lga = None
             object_list = []
             stateCount = Spaces.published.filter(state__search=state).count()
-            if 'lga' in request.GET:
-                if request.GET['lga'] != '':
-                    lga = request.GET['lga']
-                    object_list = Spaces.published.filter(state__search=state, lga__search=lga)
-                else:
-                    object_list = Spaces.published.filter(state__search=state)
+            facility_list = Spaces.facilities.most_common()[:5]  # Get the first five most common facilities
+            if ('lga' in request.GET) and (request.GET['lga'] != ''):
+                lga = request.GET['lga']
+                object_list = Spaces.published.filter(state__search=state, lga__search=lga)
             else:
-                object_list = Spaces.published.filter(state__search=state).order_by('created')
+                object_list = Spaces.published.filter(state__search=state)
             if (not state) and (not lga):
                 return redirect('spaces:dashboard')
+            if ('capacity' in request.GET) and (request.GET['capacity'] != ''):
+                capacity = request.GET['capacity']
+                object_list = object_list.filter(capacity__search=capacity)
+            if ('facilities' in request.GET) and (request.GET.getlist('facilities') != ['']):
+                filter_list = request.GET.getlist('facilities')
+                for facility in filter_list:
+                    object_list = object_list.filter(facilities__name__search=facility)
+            if ('sort' in request.GET) and (request.GET['sort'] != ''):
+                sort_list = ['rating', '-rating', 'created', '-created']  # A list of allowed items to sort by
+                sort = request.GET['sort']
+                if sort in sort_list:
+                    object_list = object_list.order_by(sort)
             paginator = Paginator(object_list, 10)
             page = request.GET.get('page')
             try:
@@ -67,7 +96,7 @@ def search(request):
             return redirect('spaces:dashboard')
     except:
         return redirect('spaces:dashboard')
-    return render(request, 'spaces/search.html', {'results': results, 'state': state, 'lga': lga, 'statecount': stateCount, 'lgacount': object_list})
+    return render(request, 'spaces/search.html', {'results': results, 'state': state, 'lga': lga, 'statecount': stateCount, 'lgacount': object_list, 'facility_list': facility_list})
 
 
 @login_required

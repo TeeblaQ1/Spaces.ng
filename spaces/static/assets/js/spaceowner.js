@@ -15,6 +15,7 @@ window.onclick = function(){
   })
 }
 addBtn.addEventListener('click', (event) => {
+  if (document.querySelector('#other-facilities').value.length > 0) {
     let facility = addFacility.value;
     let newDiv = document.createElement('div')
     newDiv.classList.add('checkbox-item')
@@ -25,6 +26,10 @@ addBtn.addEventListener('click', (event) => {
     checkboxWrap.appendChild(newDiv)
     event.preventDefault()
     document.getElementById('other-facilities').value = ""
+  } else {
+    alert("Please type in the facilities you'd like to add before clicking on the ADD button.")
+    event.preventDefault()
+  }
 })
 
 
