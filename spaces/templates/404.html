@@ -8,3 +8,6 @@
   <button><a href="{% url 'spaces:index' %}">Back to home</a></button>
 </div>
 {% endblock %}
+{% block domready %}
+<script src="{% static 'assets/js/signin.js' %}"></script>
+{% endblock %}
