@@ -26,6 +26,16 @@ window.onpopstate = (event) => {
             item.checked = false
         }
     })
+    // Handles what sort item is selected
+    if (document.location.search.includes('sort')) {
+        let url = new URLSearchParams(document.location.search)
+        sort_value = url.get('sort')
+        for (let i = 0; i < document.querySelector('#sort').options.length; i++) {
+            if (document.querySelector('#sort').item(i).value === sort_value) {
+                document.querySelector('#sort').selectedIndex = i
+            }
+        }
+    }
 }
 
 
