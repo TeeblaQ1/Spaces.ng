@@ -39,7 +39,7 @@ def dashboard(request):
         if sort in sort_list:
             object_list = object_list.order_by(sort)
 
-    paginator = Paginator(object_list, 10)
+    paginator = Paginator(object_list, 10)  # 2 spaces per page for development purposes. 10 spaces per page on the deployed version
     page = request.GET.get('page')
     try:
         spaces = paginator.page(page)
@@ -47,7 +47,7 @@ def dashboard(request):
         spaces = paginator.page(1)
     except EmptyPage:
         spaces = paginator.page(paginator.num_pages)
-    return render(request, 'spaces/dashboard.html', {'spaces': spaces, 'page': page, 'spacecount': spacecount, 'facility_list': facility_list})
+    return render(request, 'spaces/dashboard.html', {'spaces': spaces, 'page': page, 'spacecount': spacecount, 'facility_list': facility_list, 'object_list': object_list})
 
 @login_required
 def space_detail(request, space):
@@ -84,7 +84,7 @@ def search(request):
                 sort = request.GET['sort']
                 if sort in sort_list:
                     object_list = object_list.order_by(sort)
-            paginator = Paginator(object_list, 10)
+            paginator = Paginator(object_list, 10)  # 2 spaces per page for development purposes. 10 spaces per page on the deployed version
             page = request.GET.get('page')
             try:
                 results = paginator.page(page)
