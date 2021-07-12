@@ -3,9 +3,8 @@
 const checkboxWrap = document.querySelector('.checkbox-wrap')
 const addFacility = document.getElementById('other-facilities')
 const addBtn = document.querySelector('.add')
-let facilities = document.querySelectorAll('input[type=checkbox]')
-tag = document.getElementById('id_facilities')
-window.onclick = function(){
+let tag = document.getElementById('id_facilities')
+document.onclick = function(){
   let facilities = document.querySelectorAll('input[type=checkbox]')
   tag.value = ''
   facilities.forEach(function(item) {
